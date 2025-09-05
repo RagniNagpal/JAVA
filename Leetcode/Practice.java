@@ -382,3 +382,78 @@ class Solution {
 }
 
 
+class Solution {
+    public int[] findErrorNums(int[] nums) {
+        int n = nums.length;
+        Arrays.sort(nums);
+        
+        int total = n * (n + 1) / 2;
+        int actualSum = 0;
+        int duplicate = -1;
+
+        for (int i = 0; i < n; i++) {
+            actualSum += nums[i];
+            if (i < n - 1 && nums[i] == nums[i + 1]) {
+                duplicate = nums[i];
+            }
+        }
+
+        int missing = total - (actualSum - duplicate);
+
+        return new int[]{duplicate, missing};
+    }
+}
+
+
+
+class Solution {
+    public int[] relativeSortArray(int[] arr1, int[] arr2) {
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : arr1) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
+        }
+
+        int[] result = new int[arr1.length];
+        int index = 0;
+
+        for (int num : arr2) {
+            int count = freq.getOrDefault(num, 0);
+            for (int i = 0; i < count; i++) {
+                result[index++] = num;
+            }
+            freq.remove(num); 
+        }
+
+        List<Integer> remaining = new ArrayList<>();
+        for (int key : freq.keySet()) {
+            int count = freq.get(key);
+            for (int i = 0; i < count; i++) {
+                remaining.add(key);
+            }
+        }
+
+        Collections.sort(remaining);
+
+        for (int num : remaining) {
+            result[index++] = num;
+        }
+
+        return result;
+    }
+}
+
+
+import java.util.Arrays;
+
+class Solution {
+    public int arrayPairSum(int[] nums) {
+        int n=nums.length;
+        Arrays.sort(nums);
+        int minSum = 0;
+        for (int i = 0; i < nums.length; i += 2){
+               minSum +=  nums[i];
+        }
+
+        return minSum;
+    }
+}
